@@ -5,11 +5,11 @@
 
     > main{
         width: 70%;
+        overflow-y: auto;
         > h1{
             @include heading(2px);
             text-align: center;
         }
-        overflow-y: auto;
         &::-webkit-scrollbar{
             display: none;
         }
