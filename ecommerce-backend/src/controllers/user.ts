@@ -68,7 +68,7 @@ export const deleteUser = TryCatch(async (req, res, next) => {
     return next(new ErrorHandler("Invalid User", 404));
   }
 
-  user.deleteOne();
+  await user.deleteOne();
 
   return res.status(200).json({
     success: true,
