@@ -1,9 +1,10 @@
 import express from 'express'
+import { errorMiddleware } from './middlewares/error.js';
 import { connectDB } from './utils/features.js';
 
 // importing routes
-import userRoute from './routes/user.js'
-import { errorMiddleware } from './middlewares/error.js';
+import userRoute from './routes/user.js';
+import productRoute from './routes/product.js';
 
 const port = 3000;
 
@@ -20,10 +21,12 @@ app.get("/", (req, res) => {
 
 // using Routes
 app.use("/api/v1/user", userRoute);
+app.use("/api/v1/product", productRoute);
 
+app.use("/uploads", express.static("uploads"));
 // middleware for error handling
 app.use(errorMiddleware);
 
 app.listen(port, () => {
-    console.log(`Node is working on http://localhost:${port}`)
+    console.log(`Node is working on http://localhost:${port}`);
 });
