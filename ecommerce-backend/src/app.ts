@@ -1,21 +1,32 @@
 import express from 'express';
 import NodeCache from 'node-cache';
+import morgan from 'morgan';
+import { config } from 'dotenv';
 import { errorMiddleware } from './middlewares/error.js';
 import { connectDB } from './utils/features.js';
 
 // importing routes
 import userRoute from './routes/user.js';
 import productRoute from './routes/product.js';
+import orderRoute from './routes/order.js';
 
-const port = 3000;
+config({
+    path: './.env',
+});
+
+const port = process.env.PORT || 3000;
+const mongoURI = process.env.MONGODB_URI || "";
+
+console.log(port);
 
 // connect to database
-connectDB();
+connectDB(mongoURI);
 
 export const myCache = new NodeCache();
 
 const app = express();
 app.use(express.json());
+app.use(morgan("dev"));
 
 app.get("/", (req, res) => {
     res.send("API working with /api/v1")
@@ -25,6 +36,7 @@ app.get("/", (req, res) => {
 // using Routes
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/product", productRoute);
+app.use("/api/v1/order", orderRoute);
 
 app.use("/uploads", express.static("uploads"));
 // middleware for error handling
