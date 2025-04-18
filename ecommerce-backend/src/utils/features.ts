@@ -1,7 +1,7 @@
-import mongoose from "mongoose"
-import { InvalidateCacheProps, OrderItemType } from "../types/types.js"
-import { myCache } from "../app.js"
-import { Product } from "../models/product.js"
+import mongoose from "mongoose";
+import { myCache } from "../app.js";
+import { Product } from "../models/product.js";
+import { InvalidateCacheProps, OrderItemType } from "../types/types.js";
 
 export const connectDB = (uri: string) => {
     mongoose.connect(uri, {
@@ -11,19 +11,21 @@ export const connectDB = (uri: string) => {
     .catch((e) => console.log(e))
 }
 
-export const invalidateCache = async ({ product, order, admin }: InvalidateCacheProps) => {
+export const invalidateCache = async ({ product, order, admin, userId, orderId, productId }: InvalidateCacheProps) => {
     if(product) {
         const productKeys: string[] = ['latest-products', 'all-products', 'categories'];
-        const products = await Product.find({}).select('_id');
+        
+        if(typeof productId === 'string') 
+            productKeys.push(`product-${productId}`);
 
-        products.forEach((product) => {
-            productKeys.push(`product-${product._id}`);
-        });
+        if(typeof productId === 'object') 
+            productId.forEach((id) => productKeys.push(`product-${id}`));
 
         myCache.del(productKeys);
     }
     if(order) {
-
+        const orderKeys: string[] = ['all-orders', `my-orders-${userId}`, `order-${orderId}`];
+        myCache.del(orderKeys);
     }
     if(admin) {
         
