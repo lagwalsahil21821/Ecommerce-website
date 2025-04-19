@@ -1,6 +1,7 @@
 import express from 'express';
 import NodeCache from 'node-cache';
 import morgan from 'morgan';
+import Stripe from 'stripe';
 import { config } from 'dotenv';
 import { errorMiddleware } from './middlewares/error.js';
 import { connectDB } from './utils/features.js';
@@ -18,12 +19,14 @@ config({
 
 const port = process.env.PORT || 3000;
 const mongoURI = process.env.MONGODB_URI || "";
+const stripeKey = process.env.STRIPE_KEY || "";
 
 console.log(port);
 
 // connect to database
 connectDB(mongoURI);
 
+export const stripe = new Stripe(stripeKey);
 export const myCache = new NodeCache();
 
 const app = express();
