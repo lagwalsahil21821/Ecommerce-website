@@ -1,4 +1,4 @@
-# Ecom Overview
+# Strum Store
 
 This is an ecommerce application built with Node.js, Express, and MongoDB. It provides APIs for user management, product management, orders, payments, and dashboard statistics.
 
