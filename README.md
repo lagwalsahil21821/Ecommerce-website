@@ -1,6 +1,6 @@
-# Strum Store
+# 🎸 Strum Store – Your One-Stop Shop for Musical Instruments
 
-This is a website to sell musical instruments built with Node.js, Express, and MongoDB. It provides APIs for user management, product management, orders, payments, and dashboard statistics.
+Built with Node.js, Express & MongoDB – Strum Store delivers a seamless experience for buying instruments, secure Stripe payments, and real-time dashboards to keep your music business in tune.
 
 ## Features
 
